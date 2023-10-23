@@ -56,13 +56,13 @@ int main()
 									const float dist = impact_point.distance(Vector2(row, column));
 									if (dist <= 10.0f)
 									{
-										const float closeness = (1.0f - (dist / 10.0f));
+										const Percentage<uint8_t> closeness = (1.0f - (dist / 10.0f));
 #if true // additive
-										auto key_intensity = static_cast<unsigned int>(255.0f * closeness * key.getFValue());
+										auto key_intensity = static_cast<unsigned int>(key.value * closeness);
 										key_intensity += intensity[row * kr->getNumColumns() + column];
 										intensity[row * kr->getNumColumns() + column] = static_cast<uint8_t>(std::min(255u, key_intensity));
 #else
-										auto key_intensity = static_cast<uint8_t>(255.0f * closeness * key.getFValue());
+										auto key_intensity = static_cast<uint8_t>(key.value * closeness);
 										if (key_intensity > intensity[row * kr->getNumColumns() + column])
 										{
 											intensity[row * kr->getNumColumns() + column] = key_intensity;
