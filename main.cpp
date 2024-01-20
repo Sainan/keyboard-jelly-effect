@@ -43,7 +43,7 @@ int main()
 		std::cout << "Output: " << kbd.rgb->name << "\n";
 		ka = &*kbd.analogue;
 		kr = std::move(kbd.rgb);
-		Thread t([]
+		Thread t([](Capture&&)
 		{
 			while (running)
 			{
@@ -51,7 +51,7 @@ int main()
 				uint8_t intensity[kbRgb::MAX_ROWS * kbRgb::MAX_COLUMNS]{ 0 };
 				for (auto& key : ka->getActiveKeys())
 				{
-					auto [row, column] = kr->mapKeyToPos(key.sk);
+					auto [row, column] = kr->mapKeyToPos(key.sk).at(0);
 					if (row != 0xff && column != 0xff)
 					{
 						Vector2 impact_point(row, column);
